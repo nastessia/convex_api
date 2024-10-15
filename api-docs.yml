@@ -1,0 +1,414 @@
+@ -1,413 +0,0 @@
+openapi: 3.0.0
+info:
+  title: User and Keyword Management API
+  version: 1.0.0
+  description: API для управления пользователями и ключевыми словами
+
+
+paths:
+  /user:
+    get:
+      summary: Получить пользователей
+      description: Получить список пользователей с возможностью фильтрации и пагинации
+      parameters:
+        - in: query
+          name: filter
+          required: false
+          schema:
+            type: string
+          description: JSON-строка с параметрами фильтрации (например, {"name": {"=": "John"}})
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Номер страницы
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            default: 10
+          description: Количество элементов на странице
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Создать пользователя
+      description: Создать нового пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: Пользователь успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    patch:
+      summary: Обновить пользователя
+      description: Обновить существующего пользователя
+      parameters:
+        - in: query
+          name: filter
+          required: true
+          schema:
+            type: string
+          description: JSON-строка с параметрами фильтрации (например, {"name": {"=": "John"}})
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: Пользователь успешно обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /keyword:
+    get:
+      summary: Получить ключевые слова
+      description: Получить список ключевых слов с возможностью фильтрации и пагинации
+      parameters:
+        - in: query
+          name: filter
+          required: false
+          schema:
+            type: string
+          description: JSON-строка с параметрами фильтрации (например, {"keyword": {">": "a"}})
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Номер страницы
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            default: 10
+          description: Количество элементов на странице
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/KeywordListResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: Создать ключевое слово
+      description: Создать новое ключевое слово
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeywordInput'
+      responses:
+        '201':
+          description: Ключевое слово успешно создано
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeywordResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    patch:
+      summary: Обновить ключевое слово
+      description: Обновить существующее ключевое слово
+      parameters:
+        - in: query
+          name: filter
+          required: true
+          schema:
+            type: string
+          description: JSON-строка с параметрами фильтрации (например, {"keyword": {"=": "example"}})
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeywordInput'
+      responses:
+        '200':
+          description: Ключевое слово успешно обновлено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeywordUpdateResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    UserInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Имя пользователя (обязательное поле)
+        category:
+          type: array
+          items:
+            type: string
+          description: Категории пользователя
+        label:
+          type: array
+          items:
+            type: string
+          description: Метки пользователя
+        language:
+          type: array
+          items:
+            type: string
+          description: Языки пользователя
+        country:
+          type: array
+          items:
+            type: string
+          description: Страны пользователя
+        socialMediaData:
+          type: object
+          description: Данные социальных сетей пользователя
+        socialMediaUrl:
+          type: object
+          description: URL социальных сетей пользователя
+
+    KeywordInput:
+      type: object
+      required:
+        - keyword
+      properties:
+        keyword:
+          type: string
+          description: Ключевое слово (обязательное поле)
+        update_period_days:
+          type: number
+          description: Период обновления в днях
+        expirations_time:
+          type: number
+          description: Время истечения срока действия
+        category:
+          type: array
+          items:
+            type: string
+          description: Категории ключевого слова
+        label:
+          type: array
+          items:
+            type: string
+          description: Метки ключевого слова
+        language:
+          type: array
+          items:
+            type: string
+          description: Языки ключевого слова
+        country:
+          type: array
+          items:
+            type: string
+          description: Страны ключевого слова
+
+    UserListResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        currentPage:
+          type: integer
+        totalPages:
+          type: integer
+
+    KeywordListResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        keywords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Keyword'
+        count:
+          type: integer
+        totalCount:
+          type: integer
+        currentPage:
+          type: integer
+        totalPages:
+          type: integer
+
+    UserResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        user:
+          $ref: '#/components/schemas/User'
+
+    KeywordResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        keyword:
+          $ref: '#/components/schemas/Keyword'
+
+    UserUpdateResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        updated_users:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        count:
+          type: integer
+
+    KeywordUpdateResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        updated_keywords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Keyword'
+        count:
+          type: integer
+
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: array
+          items:
+            type: string
+        label:
+          type: array
+          items:
+            type: string
+        language:
+          type: array
+          items:
+            type: string
+        country:
+          type: array
+          items:
+            type: string
+        socialMediaData:
+          type: object
+        socialMediaUrl:
+          type: object
+
+    Keyword:
+      type: object
+      properties:
+        keyword:
+          type: string
+        update_period_days:
+          type: number
+        expirations_time:
+          type: number
+        category:
+          type: array
+          items:
+            type: string
+        label:
+          type: array
+          items:
+            type: string
+        language:
+          type: array
+          items:
+            type: string
+        country:
+          type: array
+          items:
+            type: string
+
+    Error:
+      type: object
+      properties:
+        status_code:
+          type: integer
+        error:
+          type: string
+        details:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Неверный запрос
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Конфликт (например, при попытке создать дубликат)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Внутренняя ошибка сервера
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
