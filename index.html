@@ -14,6 +14,21 @@
       window.ui = SwaggerUIBundle({
         url: 'api-docs.yaml',
         dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "BaseLayout",
+        supportedSubmitMethods: [],
+        defaultModelsExpandDepth: -1,
+        defaultModelExpandDepth: 1,
+        displayRequestDuration: false,
+        showExtensions: false,
+        showCommonExtensions: false,
       });
     };
   </script>
