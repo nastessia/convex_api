@@ -5,8 +5,8 @@ info:
   description: API for managing users and keywords
 
 servers:
-  - url: https://convex_url.com/v1
-    description: Convex
+  - url: https://convex_url.com/
+    description: Input your URL
 
 paths:
   /user:
