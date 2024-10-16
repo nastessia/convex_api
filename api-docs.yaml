@@ -32,7 +32,7 @@ paths:
         '200':
           description: Успешный ответ
           content:
-            application/json:    
+            application/json:
               schema:
                 $ref: '#/components/schemas/UserListResponse'
         '400':
