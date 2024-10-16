@@ -15,7 +15,7 @@ paths:
           required: false
           schema:
             type: string
-          description: JSON string with filter parameters (e.g., {"name": {"=": "John"}})
+          description: JSON string with filter parameters
         - in: query
           name: page
           schema:
@@ -72,7 +72,7 @@ paths:
           required: true
           schema:
             type: string
-          description: JSON string with filter parameters (e.g., {"name": {"=": "John"}})
+          description: JSON string with filter parameters
       requestBody:
         required: true
         content:
@@ -103,7 +103,7 @@ paths:
           required: false
           schema:
             type: string
-          description: JSON string with filter parameters (e.g., {"keyword": {">": "a"}})
+          description: JSON string with filter parameters
         - in: query
           name: page
           schema:
@@ -120,7 +120,7 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json:    
+            application/json:
               schema:
                 $ref: '#/components/schemas/KeywordListResponse'
         '400':
@@ -160,7 +160,7 @@ paths:
           required: true
           schema:
             type: string
-          description: JSON string with filter parameters (e.g., {"keyword": {"=": "example"}})
+          description: JSON string with filter parameters
       requestBody:
         required: true
         content:
