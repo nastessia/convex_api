@@ -2,35 +2,35 @@ openapi: 3.0.0
 info:
   title: User and Keyword Management API
   version: 1.0.0
-  description: API для управления пользователями и ключевыми словами
+  description: API for managing users and keywords
 
 paths:
   /user:
     get:
-      summary: Получить пользователей
-      description: Получить список пользователей с возможностью фильтрации и пагинации
+      summary: Get users
+      description: Get a list of users with filtering and pagination options
       parameters:
         - in: query
           name: filter
           required: false
           schema:
             type: string
-          description: JSON-строка с параметрами фильтрации (например, {"name": {"=": "John"}})
+          description: JSON string with filter parameters (e.g., {"name": {"=": "John"}})
         - in: query
           name: page
           schema:
             type: integer
             default: 1
-          description: Номер страницы
+          description: Page number
         - in: query
           name: pageSize
           schema:
             type: integer
             default: 10
-          description: Количество элементов на странице
+          description: Number of items per page
       responses:
         '200':
-          description: Успешный ответ
+          description: Successful response
           content:
             application/json:
               schema:
@@ -41,8 +41,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 
     post:
-      summary: Создать пользователя
-      description: Создать нового пользователя
+      summary: Create user
+      description: Create a new user
       requestBody:
         required: true
         content:
@@ -51,7 +51,7 @@ paths:
               $ref: '#/components/schemas/UserInput'
       responses:
         '201':
-          description: Пользователь успешно создан
+          description: User successfully created
           content:
             application/json:
               schema:
@@ -64,15 +64,15 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 
     patch:
-      summary: Обновить пользователя
-      description: Обновить существующего пользователя
+      summary: Update user
+      description: Update an existing user
       parameters:
         - in: query
           name: filter
           required: true
           schema:
             type: string
-          description: JSON-строка с параметрами фильтрации (например, {"name": {"=": "John"}})
+          description: JSON string with filter parameters (e.g., {"name": {"=": "John"}})
       requestBody:
         required: true
         content:
@@ -81,7 +81,7 @@ paths:
               $ref: '#/components/schemas/UserInput'
       responses:
         '200':
-          description: Пользователь успешно обновлен
+          description: User successfully updated
           content:
             application/json:
               schema:
@@ -95,30 +95,30 @@ paths:
 
   /keyword:
     get:
-      summary: Получить ключевые слова
-      description: Получить список ключевых слов с возможностью фильтрации и пагинации
+      summary: Get keywords
+      description: Get a list of keywords with filtering and pagination options
       parameters:
         - in: query
           name: filter
           required: false
           schema:
             type: string
-          description: JSON-строка с параметрами фильтрации (например, {"keyword": {">": "a"}})
+          description: JSON string with filter parameters (e.g., {"keyword": {">": "a"}})
         - in: query
           name: page
           schema:
             type: integer
             default: 1
-          description: Номер страницы
+          description: Page number
         - in: query
           name: pageSize
           schema:
             type: integer
             default: 10
-          description: Количество элементов на странице
+          description: Number of items per page
       responses:
         '200':
-          description: Успешный ответ
+          description: Successful response
           content:
             application/json:    
               schema:
@@ -129,8 +129,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 
     post:
-      summary: Создать ключевое слово
-      description: Создать новое ключевое слово
+      summary: Create keyword
+      description: Create a new keyword
       requestBody:
         required: true
         content:
@@ -139,7 +139,7 @@ paths:
               $ref: '#/components/schemas/KeywordInput'
       responses:
         '201':
-          description: Ключевое слово успешно создано
+          description: Keyword successfully created
           content:
             application/json:
               schema:
@@ -152,15 +152,15 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 
     patch:
-      summary: Обновить ключевое слово
-      description: Обновить существующее ключевое слово
+      summary: Update keyword
+      description: Update an existing keyword
       parameters:
         - in: query
           name: filter
           required: true
           schema:
             type: string
-          description: JSON-строка с параметрами фильтрации (например, {"keyword": {"=": "example"}})
+          description: JSON string with filter parameters (e.g., {"keyword": {"=": "example"}})
       requestBody:
         required: true
         content:
@@ -169,7 +169,7 @@ paths:
               $ref: '#/components/schemas/KeywordInput'
       responses:
         '200':
-          description: Ключевое слово успешно обновлено
+          description: Keyword successfully updated
           content:
             application/json:
               schema:
@@ -190,33 +190,33 @@ components:
       properties:
         name:
           type: string
-          description: Имя пользователя (обязательное поле)
+          description: User name (required field)
         category:
           type: array
           items:
             type: string
-          description: Категории пользователя
+          description: User categories
         label:
           type: array
           items:
             type: string
-          description: Метки пользователя
+          description: User labels
         language:
           type: array
           items:
             type: string
-          description: Языки пользователя
+          description: User languages
         country:
           type: array
           items:
             type: string
-          description: Страны пользователя
+          description: User countries
         socialMediaData:
           type: object
-          description: Данные социальных сетей пользователя
+          description: User social media data
         socialMediaUrl:
           type: object
-          description: URL социальных сетей пользователя
+          description: User social media URLs
 
     KeywordInput:
       type: object
@@ -225,33 +225,33 @@ components:
       properties:
         keyword:
           type: string
-          description: Ключевое слово (обязательное поле)
+          description: Keyword (required field)
         update_period_days:
           type: number
-          description: Период обновления в днях
+          description: Update period in days
         expirations_time:
           type: number
-          description: Время истечения срока действия
+          description: Expiration time
         category:
           type: array
           items:
             type: string
-          description: Категории ключевого слова
+          description: Keyword categories
         label:
           type: array
           items:
             type: string
-          description: Метки ключевого слова
+          description: Keyword labels
         language:
           type: array
           items:
             type: string
-          description: Языки ключевого слова
+          description: Keyword languages
         country:
           type: array
           items:
             type: string
-          description: Страны ключевого слова
+          description: Keyword countries
 
     UserListResponse:
       type: object
@@ -393,19 +393,19 @@ components:
 
   responses:
     BadRequest:
-      description: Неверный запрос
+      description: Bad request
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     Conflict:
-      description: Конфликт (например, при попытке создать дубликат)
+      description: Conflict (e.g., when trying to create a duplicate)
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     InternalServerError:
-      description: Внутренняя ошибка сервера
+      description: Internal server error
       content:
         application/json:
           schema:
