@@ -195,79 +195,29 @@ components:
         name:
           type: string
           description: User name (required field)
-          example: "Jojo"
         category:
           type: array
           items:
             type: string
           description: User categories
-          example: ["gaming", "entertainment"]
         label:
           type: array
           items:
             type: string
           description: User labels
-          example: ["esports", "navi"]
         language:
           type: array
           items:
             type: string
           description: User languages
-          example: ["FR", "DE"]
         country:
           type: array
           items:
             type: string
           description: User countries
-          example: ["France", "Germany"]
         socialMediaData:
           type: object
           description: User social media data
-          example: {
-            facebook: [{ channel_id: "" }],
-            instagram: [{ channel_id: "" }],
-            tiktok: [{ channel_id: "" }],
-            twitch: [
-              {
-                average_stream_length: 0,
-                average_viewers: 0,
-                average_watch_time: 0,
-                channel_id: "",
-                median_stream_length: 0,
-                median_viewers: 0,
-                median_watch_time: 0,
-                peak_viewers: 0,
-                primary: false,
-                processed: false,
-                to_be_updated: false,
-              },
-            ],
-            x: [{ channel_id: "" }],
-            youtube: [
-              {
-                average_comments: 554,
-                average_likes: 1360,
-                average_views: 3600,
-                channel_id: "Jojo",
-                frequency: "medium",
-                is_active: true,
-                is_verified: true,
-                joined_at: "",
-                location: "Paris",
-                median_comments: 500,
-                median_likes: 1000,
-                median_views: 3000,
-                picture_url: "",
-                primary: false,
-                proccessed: false,
-                subscribers: 4500,
-                title: "Jojo Channel",
-                to_be_updated: false,
-                videos_count: 60,
-                views: 56214,
-              },
-            ],
-          }
         socialMediaUrl:
           type: object
           description: User social media URLs
